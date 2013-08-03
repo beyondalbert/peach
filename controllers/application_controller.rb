@@ -39,9 +39,9 @@ class ApplicationController < Sinatra::Base
 
     if @user.save
       session[:user] = @user.token
-      redirect '/'
+      redirect '/peach/'
     else
-      redirect "/signup?email=#{params[:user][:email]}"
+      redirect "/peach/signup?email=#{params[:user][:email]}"
     end
   end
 
@@ -49,18 +49,18 @@ class ApplicationController < Sinatra::Base
     if @user = User.find_by_email(params[:email])
       if @user.password_hash == BCrypt::Engine.hash_secret(params[:password], @user.password_salt)
         session[:user] = @user.token
-        redirect '/'
+        redirect '/peach/'
       else
-        redirect "/login?email=#{params[:email]}"
+        redirect "/peach/login?email=#{params[:email]}"
       end
     else
-      redirect "/login?email=#{params[:email]}"
+      redirect "/peach/login?email=#{params[:email]}"
     end
   end
 
   get '/logout' do
     session[:user] = nil
-    redirect '/'
+    redirect '/peach/'
   end
 
   get '/forget_passowrd' do
@@ -75,7 +75,7 @@ class ApplicationController < Sinatra::Base
     if login?
       erb :change_password
     else
-      redirect "/login"
+      redirect "/peach/login"
     end
   end
 
@@ -84,12 +84,12 @@ class ApplicationController < Sinatra::Base
     if @user.password_hash == BCrypt::Engine.hash_secret(params[:old_password], @user.password_salt)
       @user.password_hash = @user.password_hash = BCrypt::Engine.hash_secret(params[:new_password], @user.password_salt)    
       if @user.save
-        redirect '/'
+        redirect '/peach/'
       else
-        redirect "/change_password"
+        redirect "/peach/change_password"
       end
     else
-      redirect "/change_password"
+      redirect "/peach/change_password"
     end
   end
 

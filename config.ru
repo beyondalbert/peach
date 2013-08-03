@@ -5,6 +5,6 @@ require './controllers/application_controller.rb'
 
 Dir.glob('./{helpers,controllers,models}/*.rb').each {|file| require file}
 
-map('/users') { run UsersController }
-map('/pictures') { run PicturesController }
-map('/') { run ApplicationController }
+map('/peach/users') { run UsersController }
+map('/peach/pictures') { run PicturesController }
+map('/peach') { run ApplicationController }
