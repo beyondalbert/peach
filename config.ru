@@ -7,4 +7,4 @@ Dir.glob('./{helpers,controllers,models}/*.rb').each {|file| require file}
 
 map('/peach/users') { run UsersController }
 map('/peach/pictures') { run PicturesController }
-map('/peach') { run ApplicationController }
+map('/peach/') { run ApplicationController }
