@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>图片分享</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="图片分享">
+    <meta name="author" content="beyondalbert">
+
+    <!-- Le styles -->
+    <link href="/assets/stylesheets/bootstrap.min.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+        font-family: Arial, sans-serif;
+        font-size: 13px;
+        line-height: 18px;
+        color: #333333;
+      }
+    </style>
+    <link href="/assets/stylesheets/bootstrap-responsive.min.css" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.bootcss.com/ajax/libs/html5shiv/3.6.2/html5shiv.js"></script>
+    <![endif]-->
+
+    <!-- Fav and touch icons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
+      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
+                    <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
+                                   <link rel="shortcut icon" href="../assets/ico/favicon.png">
+  </head>
+
+  <body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand" href="#">图片分享</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li class="active"><a href="/">主 页</a></li>
+              <li><a href="#about">下 载</a></li>
+              <li><a href="#contact">关 于</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">更 多 <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <% if current_user %>
+                    <li><a href="/api-doc/index.html">API-DOCS</a></li>
+                  <% end %>
+                  <li><a href="#">Another action</a></li>
+                  <li><a href="#">Something else here</a></li>
+                  <li class="divider"></li>
+                  <li class="nav-header">Nav header</li>
+                  <li><a href="#">Separated link</a></li>
+                  <li><a href="#">One more separated link</a></li>
+                </ul>
+              </li>
+            </ul>
+            <% if current_user %>
+              <p class="navbar-text pull-right">
+                <a href="#" class="navbar-link"><%= current_user.email %></a>
+                <a href="/logout" class="navbar-link">注销</a>
+              </p>
+            <% else %>
+              <form action="/login" method="post" class="navbar-form pull-right">
+                <input name="email" class="span2" type="text" placeholder="邮箱帐号">
+                <input name="password" class="span2" type="password" placeholder="密码">
+                <button type="submit" class="btn">登录</button>
+              </form>
+            <% end %>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <%if @error then %>
+        <div class="alert alert-error"><%=@error%></div>
+      <% end %>
+      <%= yield %>
+      <hr>
+      <footer>
+        <p>© Qiuchu 2013</p>
+      </footer>
+    </div> <!-- /container -->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="/assets/javascripts/jquery-1.9.1.min.js"></script>
+    <script src="/assets/javascripts/bootstrap.min.js"></script>
+  </body>
+</html>
