@@ -67,10 +67,10 @@
             <% if current_user %>
               <p class="navbar-text pull-right">
                 <a href="#" class="navbar-link"><%= current_user.email %></a>
-                <a href="/logout" class="navbar-link">注销</a>
+                <a href="/peach/logout" class="navbar-link">注销</a>
               </p>
             <% else %>
-              <form action="/login" method="post" class="navbar-form pull-right">
+              <form action="/peach/login" method="post" class="navbar-form pull-right">
                 <input name="email" class="span2" type="text" placeholder="邮箱帐号">
                 <input name="password" class="span2" type="password" placeholder="密码">
                 <button type="submit" class="btn">登录</button>
