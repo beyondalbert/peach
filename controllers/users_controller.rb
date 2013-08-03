@@ -23,7 +23,9 @@ class UsersController < ApplicationController
     @user.token = SecureRandom.hex
     if @user.save
       status 201
-      @user.to_json
+      value = user_to_hash(@user, 1)
+			value["token"] = @user.token
+      value.to_json
     else
       status 500
     end
@@ -38,7 +40,9 @@ class UsersController < ApplicationController
     if @user = User.find_by_email(params[:email])
       if @user.password_hash == BCrypt::Engine.hash_secret(params[:password], @user.password_salt)
         status 202
-        @user.to_json
+        value = user_to_hash(@user, 1)
+			  value["token"] = @user.token
+        value.to_json
       else
         status 401
       end
@@ -57,7 +61,9 @@ class UsersController < ApplicationController
       @current_user.password_hash = @current_user.password_hash = BCrypt::Engine.hash_secret(params[:new_password], @current_user.password_salt)    
       if @current_user.save
         status 202
-        @current_user.to_json
+        value = user_to_hash(@current_user, 1)
+			  value["token"] = @current_user.token
+        value.to_json
       else
         status 500
       end

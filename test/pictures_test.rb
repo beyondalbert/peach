@@ -2,8 +2,8 @@ require 'rubygems'
 require 'typhoeus'
 require 'json'
 
-host = "http://localhost:3000/"
-#host = "http://www.qiu-chu.com/"
+# host = "http://localhost:3000/peach/"
+host = "http://www.qiu-chu.com/peach/"
 
 res_dev1_login = Typhoeus.post(host + "users/login",
 										 	params: {email: "dev1@sina.com", password: "123456"})

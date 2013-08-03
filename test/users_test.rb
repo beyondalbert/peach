@@ -2,13 +2,14 @@ require 'rubygems'
 require 'typhoeus'
 require 'json'
 
-host = "http://localhost:3000/"
-# host = "http://www.qiu-chu.com/"
+host = "http://localhost:3000/peach/"
+# host = "http://www.qiu-chu.com/peach/"
 
 res_signup = Typhoeus::Request.post(host + "users/signup", 
 				:params => {:email => "test123456789@sina.com", :password => "123456", :password_c => "123456"})
 if res_signup.code == 201
-  token = JSON.parse(res_signup.body)["user"]["token"]
+  p JSON.parse(res_signup.body)
+  token = JSON.parse(res_signup.body)["token"]
   p "signup success!"
 else
   p "error found in signup, error code: #{res_signup.code}"
@@ -33,8 +34,8 @@ end
 res_login = Typhoeus::Request.post(host + "users/login",
 			   	:params => {:email => "test123456789@sina.com", :password => "123456"})
 if res_login.code == 202
-  token = JSON.parse(res_login.body)["user"]["token"]
-  user_id = JSON.parse(res_login.body)["user"]["id"]
+  token = JSON.parse(res_login.body)["token"]
+  user_id = JSON.parse(res_login.body)["id"]
   p "login success!"
 else
   p "error found in login, error code: #{res_login.code}"
@@ -43,7 +44,7 @@ end
 res_dev1_login = Typhoeus.post(host + "users/login",
 				     params: {email: "dev1@sina.com", password: "123456"})
 if res_dev1_login.code == 202
-  dev1_token = JSON.parse(res_dev1_login.body)["user"]["token"]
+  dev1_token = JSON.parse(res_dev1_login.body)["token"]
 else
   p "error found in dev1 login, error code: #{res_dev1_login.code}"
 end
@@ -65,7 +66,7 @@ res_change_password = Typhoeus::Request.post(host + "users/change_password",
 						:new_password_c => "abcdef",
 						:key => token})
 if res_change_password.code == 202
-  token = JSON.parse(res_change_password.body)["user"]["token"]
+  token = JSON.parse(res_change_password.body)["token"]
   p "change password success"
 else
   p "error found in change password, error code: #{res_change_password.code}"
