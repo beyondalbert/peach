@@ -1,5 +1,7 @@
 class PicturesController < ApplicationController
   
+  helpers PicturesHelper
+
   before do
     content_type :json
     @current_user ||= User.find_by_token(params[:key]) unless params[:key].nil?
@@ -51,13 +53,47 @@ class PicturesController < ApplicationController
 	  end
   end
 
+	# 功能：获取图片信息
+	# 参数：params[:key] params[:id]
+	# 用法：http://localhost:3000/peach/pictures/1?key=5408afee03ca8c52a780570a4322cae3
+	# 返回值：200：获取成功，返回picture的json数据
+	# 				401：用户认证失败
+	# 				404：图片信息不存在
+	get '/:id' do
+    begin
+			@picture = Picture.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      error status 404
+    end
+		picture_to_hash(@picture, 1).to_json
+	end
+
+	# 功能：返回自己分享的图片
+	# 参数：params[:key]
+	# 用法：http://localhost:3000/peach/pictures?key=5408afee03ca8c52a780570a4322cae3
+	# 返回值：200:获取成功，返回自己分享的图片信息
+	# 				401：用户认证失败
+	get '/' do
+		values = []
+		@pictures = @current_user.pictures
+		@pictures.each do |picture|
+			values << picture_to_hash(picture, 2)
+		end
+		values.to_json
+	end
+
   # 功能：用于图片的下载的URL
   # 参数：params[:key] params[:size]
   # 用法：http://localhost:3000/pictures/1?key=5408afee03ca8c52a780570a4322cae3
   # 返回值：用户认证失败：返回401
   #        下载成功：    返回200
   # 说明：parmas[:size]用于控制下载图片的尺寸，为空时，返回原图片，为small时，返回50x50大小的缩略图
-  get '/:id' do
+  get '/down/:id' do
+    begin
+			@picture = Picture.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      error status 404
+    end
     if params[:size] == "small"
       image = MiniMagick::Image.open(@picture.path)
       image.resize "50x50"
