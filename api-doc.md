@@ -118,17 +118,53 @@ curl -d “email=test@sina.com&password=123456&password_c=123456” http://www.q
   </tr>
 </table>
 
-### 获取指定图片
+### 获取指定图片信息
 * 接口url[get]: http://www.qiu-chu.com/peach/pictures/:id
-* 参数： params[:key] params[:size]
-* curl示例：
+* 参数： params[:key] params[:id]
+* curl示例：curl http://www.qiu-chu.com/peach/pictures/1?key=5408afee03ca8c52a780570a4322cae3
 * 返回值：
 <table>
   <tr>
     <th>返回状态码</th><th>返回值＆说明</th>
   </tr>
   <tr>
-    <td>200</td><td>获取图片成功</td>
+    <td>200</td><td>获取图片信息成功</td>
+  </tr>
+  <tr>
+    <td>401</td><td>用户认证失败</td>
+  </tr>
+</table>
+
+### 获取自己分享的图片信息
+* 接口url[get]: http://www.qiu-chu.com/peach/pictures
+* 参数： params[:key]
+* curl示例：curl http://www.qiu-chu.com/peach/pictures?key=5408afee03ca8c52a780570a4322cae3
+* 返回值：
+<table>
+  <tr>
+    <th>返回状态码</th><th>返回值＆说明</th>
+  </tr>
+  <tr>
+    <td>200</td><td>获取自己分享的图片信息成功</td>
+  </tr>
+  <tr>
+    <td>401</td><td>用户认证失败</td>
+  </tr>
+</table>
+
+### 下载图片
+* 接口url[get]: http://www.qiu-chu.com/peach/pictures/down/:id
+* 参数： params[:key] params[:id]
+* curl示例：curl -O http://www.qiu-chu.com/peach/pictures/down/3?key=a3adccce5b61c08d41c0e26ae9240b10 
+
+  获取缩略图： curl -O -X GET -d “size=small” http://www.qiu-chu.com/peach/pictures/down/4?key=a3adccce5b61c08d41c0e26ae9240b10
+* 返回值：
+<table>
+  <tr>
+    <th>返回状态码</th><th>返回值＆说明</th>
+  </tr>
+  <tr>
+    <td>200</td><td>下载图片成功</td>
   </tr>
   <tr>
     <td>401</td><td>用户认证失败</td>
